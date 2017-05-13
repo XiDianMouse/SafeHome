@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:padding="3dp"
+    android:scrollbars="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+	    <TextView
+	    	android:id="@+id/areaName"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:overScrollMode="always"
+	        android:scrollbars="vertical"
+	        android:textSize="18sp"
+	        android:text="@string/hand_operation"
+	        android:textColor="@color/txtRed"
+	        android:textStyle="bold"
+	        />
+	</LinearLayout>
+
+
+	<RelativeLayout
+		android:id="@+id/operationArea"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="3"
+		android:layout_centerInParent="true">
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/hand_main"
+			android:layout_centerInParent="true" />
+
+		<ImageButton
+			android:id="@+id/hand_open"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			/>
+
+		<ImageButton
+			android:id="@+id/hand_delete"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:layout_above="@+id/hand_open"
+			android:layout_centerInParent="true"
+			android:layout_marginBottom="27dp"
+			android:src="@drawable/selector_delete_main"/>
+
+		<ImageButton
+			android:id="@+id/hand_register"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:layout_toLeftOf="@+id/hand_open"
+			android:layout_alignBottom="@+id/hand_open"
+			android:layout_marginRight="27dp"
+			android:src="@drawable/selector_register_main"/>
+
+		<ImageButton
+			android:id="@+id/hand_identification"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:layout_toRightOf="@+id/hand_open"
+			android:layout_alignBottom="@+id/hand_open"
+			android:layout_marginLeft="27dp"
+			android:src="@drawable/selector_identification_main"/>
+
+		<ImageButton
+			android:id="@+id/hand_deleteall"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:layout_below="@+id/hand_open"
+			android:layout_centerInParent="true"
+			android:layout_marginTop="27dp"
+			android:src="@drawable/selector_deleteall_main"/>
+	</RelativeLayout>
+    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+	    <TextView
+	    	android:id="@+id/hand_status"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:overScrollMode="always"
+	        android:scrollbars="vertical"
+	        android:textSize="18sp"
+	        android:text="@string/hand_statusinformation"
+	        android:textColor="@color/txtRed"
+	        android:textStyle="bold"
+	        />
+	     <TextView
+	        android:id="@+id/hand_showstatus"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:overScrollMode="never"
+	        android:scrollbars="vertical"
+	        android:textColor="@color/colorBlue"
+	        android:text="hello"/>
+	</LinearLayout>
+	
+</LinearLayout>

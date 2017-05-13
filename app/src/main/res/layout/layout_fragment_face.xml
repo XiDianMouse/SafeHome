@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:padding="3dp"
+    android:scrollbars="vertical" >
+    	
+    <TextView
+    	android:id="@+id/areaName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="always"
+        android:scrollbars="vertical"
+        android:textSize="18sp"
+        android:text="@string/face_operation"
+        android:textColor="@color/txtRed"
+        android:textStyle="bold"
+        />
+
+    <RelativeLayout
+        android:id="@+id/operationArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        >
+        <Button
+            android:id="@+id/face_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+        	android:textColor="@color/colorBlue"
+        	android:padding="20dp"
+            android:text="打开人脸" />
+
+        <Button
+            android:id="@+id/face_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/face_open"
+            android:layout_alignLeft="@id/face_open"
+            android:layout_marginBottom="20dp"
+        	android:textColor="@color/colorBlue"
+        	android:padding="20dp"
+            android:text="删除单个" />
+
+        <Button
+            android:id="@+id/face_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/face_open"
+            android:layout_alignTop="@id/face_open"
+            android:layout_marginRight="25dp"
+        	android:textColor="@color/colorBlue"
+        	android:padding="20dp"
+            android:text="注册" />
+
+        <Button
+            android:id="@+id/face_identification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/face_open"
+            android:layout_alignTop="@id/face_open"
+            android:layout_marginLeft="25dp"
+        	android:textColor="@color/colorBlue"
+        	android:padding="20dp"
+            android:text="识别" />
+
+        <Button
+            android:id="@+id/face_deleteall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/face_open"
+            android:layout_alignLeft="@id/face_open"
+            android:layout_marginTop="20dp"
+        	android:textColor="@color/colorBlue"
+        	android:padding="20dp"
+            android:text="删除全部" />
+
+    </RelativeLayout>
+
+	
+</LinearLayout>

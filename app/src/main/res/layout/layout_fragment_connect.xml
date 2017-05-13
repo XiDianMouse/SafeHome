@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:text="连接方式"
+        android:textSize="20sp"
+        android:textColor="@color/colorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+    <View
+        style="@style/home.horizontalLine">
+    </View>
+    
+    <Button
+        android:id="@+id/select_bluetoothConnect"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="蓝牙连接"
+        android:textSize="40sp"
+        android:textColor="@drawable/home_adjust_textcolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/connect_adjust_background"
+     />
+
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_height="5dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorBlue">
+    </View>
+
+    <Button
+        android:id="@+id/select_gprsConnect"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="GPRS连接"
+        android:textSize="40sp"
+        android:textColor="@drawable/home_adjust_textcolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/connect_adjust_background"
+        />
+</LinearLayout>

@@ -1,0 +1,25 @@
+<resources>
+
+    <string name="app_name">SafeHome</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="connected">已连接</string>
+    <string name="connecting">正在连接...</string>
+    <string name="disconnected">未连接</string>
+
+    <string name="hand_operation">【指纹管理】</string>
+    <string name="hand_statusinformation">【状态信息】</string>
+    <string name="face_operation">【人脸管理】</string>
+
+    <string name="about_author">作者:西电张彤实验室</string>
+    <string name="about_project">项目简介:\n易读,一个纯粹的阅读App\n该项目会持续迭代与优化,加入更丰富的内容与功能,并不断尝试最新的技术,欢迎star、fork、issue\n点击下面的项目链接给个star吧,您的star就是对我最大的支持。</string>
+    <string name="about_addr">https://github.com/laotan7237/EasyReader</string>//项目地址
+    <string name="github_issues">您好，您有什么好的意见可以及时向我反馈，您可以在GitHub的Issues处说明问题原因，也可以通过以下方式联系我，我将根据情况尽量处理哦 ~</string>
+
+    <string name="action_share">分享</string>
+
+    <string name="actionbar_webview_share">分享到</string>
+    <string name="actionbar_webview_cope">复制链接</string>
+    <string name="actionbar_webview_open">打开链接</string>
+</resources>

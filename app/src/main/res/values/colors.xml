@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorTheme">#ffce3d3a</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="btn_press_color">#d1d1d1</color>
+    <color name="popmenu_item_pressed">#e1e1e1</color>
+    <color name="popmenu_item_normal">#d1d1d1</color>
+
+    <color name="txtRed">#dc5130</color>
+    <color name="colorBlue">#00a2e0</color>
+
+    <color name="divider_header">#c8c8c8</color>
+
+    <color name="colorPageBg">#f2f4f5</color>
+    <color name="itemBackgroundWhite">#cfff</color>
+    <color name="comment_text">#5b5d5c</color>
+
+    <color name="colorText">#2C2C2C</color>
+
+    <color name="colorWhite">#ffffffff</color>
+    <color name="itemBackground">#DD7D7D7D</color>
+    <color name="halfTranslucent">#1000</color>
+
+    <color name="colorTabText">#585858</color>
+
+    <color name="translucent">#0fff</color>
+
+    <color name="tabBackground">#777D7D7D</color>
+
+    <color name="colorLineItem">#FFDDDDDD</color>
+
+    <color name="itemLowBackground">#d9d9d9</color>
+</resources>
