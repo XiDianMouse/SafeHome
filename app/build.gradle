@@ -1,9 +1,25 @@
-apply plugin: 'com.android.application'
+/*
+*Gradle是一种依赖管理工具，基于Groovy语言，面向Java应用为主，
+* 它抛弃了基于XML的各种繁琐配置，取而代之的是一种基于Groovy的内部领域特定（DSL）语言
+* */
 
+
+
+
+
+
+
+//声明是Android程序
+apply plugin: 'com.android.application'//打包得到的是.apk文件
+
+//用来指定Android打包插件的相关属性
 android {
+    //编译SDK的版本
     compileSdkVersion 25
+    //build tools的版本(编译时使用的构建工具版本)
     buildToolsVersion "25.0.2"
-    defaultConfig {
+    defaultConfig {//设置一些默认属性,其可用属性是buildTypes和ProductFlavors之和
+        //应用包名
         applicationId "com.safehome"
         minSdkVersion rootProject.ext.minSdk//也可以支持16级以上的不过页面跳转效果就没有了，透明状态栏也没有。
         targetSdkVersion rootProject.ext.targetSdk
@@ -12,20 +28,26 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+    buildTypes {//配置构建类型，可打出不同类型的包，默认有debug和release两种
         release {
+            //配置构建类型，可打出不同类型的包，默认有debug和release两种
             minifyEnabled false
+            //混淆文件的位置
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
+//Android Studio添加引用第三方Library
 dependencies {
+    //编译libs目录下的所有jar包
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //compile是对所有的build type以及favlors都会参与编译并且打包到最终的apk文件中
     compile 'com.android.support:appcompat-v7:25.1.0'
+    //Test compile 仅仅是针对单元测试代码的编译编译以及最终打包测试apk时有效，而对正常的debug或者release apk包不起作用
     testCompile 'junit:junit:4.12'
     compile "com.android.support:design:${rootProject.ext.support}"
 
@@ -39,10 +61,10 @@ dependencies {
 
     compile "com.android.support:cardview-v7:${rootProject.ext.support}"
 
-    //di
-    compile 'com.google.dagger:dagger:2.0.2'
-    compile 'com.google.dagger:dagger-compiler:2.0.2'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    //***************************Dagger2使用注解
+    compile 'com.google.dagger:dagger:2.0.2'//指定注解处理器
+    compile 'com.google.dagger:dagger-compiler:2.0.2'//dagger公用api
+    provided 'org.glassfish:javax.annotation:10.0-b28'//添加Android缺失的部分javax注解
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
