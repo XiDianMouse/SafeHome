@@ -12,6 +12,7 @@ import rx.Observable;
  */
 
 public class RetrofitGankIoUtils extends HttpUtils{
+
     private GankIoService mGankIoService;
 
     public RetrofitGankIoUtils(GankIoService gankIoService){
