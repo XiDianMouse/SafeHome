@@ -1,5 +1,6 @@
 package com.safehome.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,9 @@ import butterknife.ButterKnife;
  */
 
 public class MenuAdapter extends RecyclerBaseAdapter<MenuItem, MenuViewHolder> {
+    public MenuAdapter(Context context){
+        super(context);
+    }
 
     @Override
     protected void bindDataToItemView(MenuViewHolder viewHolder, MenuItem item) {
