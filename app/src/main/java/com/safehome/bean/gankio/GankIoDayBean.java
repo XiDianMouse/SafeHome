@@ -10,7 +10,6 @@ import java.util.List;
  * Created by quantan.liu on 2017/3/22.
  */
 public class GankIoDayBean implements Serializable {
-
     private boolean error;
     private ResultsBean results;
     private List<String> category;
