@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class MenuAdapter extends RecyclerBaseAdapter<MenuEntry, MenuViewHolder> {
+
     public MenuAdapter(Context context){
         super(context);
     }
