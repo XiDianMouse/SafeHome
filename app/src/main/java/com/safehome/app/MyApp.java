@@ -10,10 +10,12 @@ import com.blankj.utilcode.utils.Utils;
  */
 
 public class MyApp extends Application{
+
     @Override
     public void onCreate(){
         super.onCreate();
         //一个utils库的初始化 https://github.com/Blankj/AndroidUtilCode/blob/master/README-CN.
         Utils.init(this);
     }
+
 }
