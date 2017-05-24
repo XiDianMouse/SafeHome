@@ -1,15 +1,16 @@
-package com.safehome.bean.menu;
+package com.safehome.ItemEntry;
 
 /**
  * @auther gbh
  * Created on 2017/5/12.
  */
 
-public class MenuItem {
+public class MenuEntry {
+    
     public int iconResId;
     public String text;
 
-    public MenuItem(int iconResId,String text){
+    public MenuEntry(int iconResId, String text){
         this.iconResId = iconResId;
         this.text = text;
     }
