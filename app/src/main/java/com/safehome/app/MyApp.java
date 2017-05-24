@@ -11,7 +11,7 @@ import com.blankj.utilcode.utils.Utils;
 
 public class MyApp extends Application{
 
-    //在这里修改了代码
+    //在这里修改了代码,添加了注释
 
     @Override
     public void onCreate(){
