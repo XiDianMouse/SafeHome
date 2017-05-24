@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.safehome.ItemEntry.MenuEntry;
 import com.safehome.R;
 import com.safehome.adapter.MenuAdapter.MenuViewHolder;
-import com.safehome.bean.menu.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
  * Created on 2017/5/12.
  */
 
-public class MenuAdapter extends RecyclerBaseAdapter<MenuItem, MenuViewHolder> {
+public class MenuAdapter extends RecyclerBaseAdapter<MenuEntry, MenuViewHolder> {
     public MenuAdapter(Context context){
         super(context);
     }
 
     @Override
-    protected void bindDataToItemView(MenuViewHolder viewHolder, MenuItem item) {
+    protected void bindDataToItemView(MenuViewHolder viewHolder, MenuEntry item) {
         viewHolder.menuIv.setImageResource(item.iconResId);
         viewHolder.menuTv.setText(item.text);
     }
