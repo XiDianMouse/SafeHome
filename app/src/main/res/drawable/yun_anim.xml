@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--帧动画是一系列图片按照一定的顺序展示的过程,其原理是在一定的时间段内切换多张有细微差异的图片从而达到动画的效果,
+在xml文件中定义帧动画时,<animation-list>元素必须要作为根元素,它可以包含一个或多个<item>元素.
+android:onshot如果定义为true时,此动画只会执行一次,若为false则会一直循环.
+android:druation代表此帧持续的时间,单位为毫秒-->
+
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
     <item
