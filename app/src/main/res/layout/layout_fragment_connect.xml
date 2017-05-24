@@ -22,10 +22,10 @@
         android:layout_marginEnd="15dp"
         android:text="蓝牙连接"
         android:textSize="40sp"
-        android:textColor="@drawable/home_adjust_textcolor"
+        android:textColor="@drawable/selector_login_textcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/connect_adjust_background"
+        android:background="@drawable/selector_connect_background"
      />
 
     <View
@@ -42,9 +42,29 @@
         android:layout_marginEnd="15dp"
         android:text="GPRS连接"
         android:textSize="40sp"
-        android:textColor="@drawable/home_adjust_textcolor"
+        android:textColor="@drawable/selector_login_textcolor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/connect_adjust_background"
+        android:background="@drawable/selector_connect_background"
+        />
+
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_height="5dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorBlue">
+    </View>
+
+    <Button
+        android:id="@+id/select_httpConnect"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="公网连接"
+        android:textSize="40sp"
+        android:textColor="@drawable/selector_login_textcolor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_connect_background"
         />
 </LinearLayout>
