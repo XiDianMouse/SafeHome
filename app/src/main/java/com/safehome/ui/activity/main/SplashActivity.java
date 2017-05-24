@@ -18,7 +18,6 @@ import butterknife.Unbinder;
  */
 
 public class SplashActivity extends BaseActivity {
-
     @BindView(R.id.iv_pic)
     ImageView ivPic;
     private Unbinder bind;
