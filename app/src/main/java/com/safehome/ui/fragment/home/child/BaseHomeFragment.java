@@ -2,20 +2,31 @@ package com.safehome.ui.fragment.home.child;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.utils.ToastUtils;
+import com.safehome.bluetooth.BTController;
 import com.safehome.communication.SendTask;
+import com.safehome.dialog.BluetoothDialog;
+import com.safehome.gprs.PhoneControl;
 import com.safehome.protocol.BTProtocol;
+import com.safehome.tcp.TcpController;
 import com.safehome.ui.activity.main.HomeActivity;
-import com.safehome.utils.MyLog;
+import com.safehome.utils.StringUtils;
 
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -25,20 +36,30 @@ import butterknife.Unbinder;
  * Created on 2017/5/7.
  */
 
-public abstract class BaseHomeFragment extends Fragment {
-    protected int CURRENT_FRAGMENT;
-    private HomeActivity activity;
+public abstract class BaseHomeFragment extends Fragment{
+    public static TcpController mTcpController;
+    public static int mCommandStyle;//0:蓝牙 1:GPRS 2:公网
+    public static boolean mIsConnected;
+    public static ConcurrentHashMap<String,FutureTask<Integer>> mBluetoothMap;
+    public static ConcurrentHashMap<String,FutureTask<Integer>> mNetWorkMap;
+
+    protected HomeActivity activity;
     private boolean hasCreateView;
     private boolean isFragmentVisible;
     protected View rootView;
-    private ExecutorService executorService;
-    private ConcurrentHashMap<String,FutureTask<Integer>> taskMap;
+    protected BluetoothDialog mBluetoothDialog;
+    protected BTController mBTController;
+    private ThreadPoolExecutor mThreadPoolExector;
+    private PhoneControl mPhoneControl;
     private Unbinder bind;
 
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
         this.activity = (HomeActivity)activity;
+        mBTController = BTController.getInstance();
+        mBTController.open();
+        mPhoneControl = PhoneControl.getInstance(this.activity);
         afterOnAttach(this.activity);
     }
 
@@ -52,9 +73,35 @@ public abstract class BaseHomeFragment extends Fragment {
         initVariable();
     }
     private void initVariable(){
-        CURRENT_FRAGMENT = 0;//初始界面为指纹识别界面
         hasCreateView = false;
         isFragmentVisible = false;
+        mBluetoothMap = new ConcurrentHashMap<>();
+        mNetWorkMap = new ConcurrentHashMap<>();
+        mThreadPoolExector = new ThreadPoolExecutor(1,
+                                                    1,
+                                                    1,
+                                                    TimeUnit.SECONDS,
+                                                    new ArrayBlockingQueue<Runnable>(5),
+                                                    new CustomThreadFactory(),
+                                                    new CustomRejectedExecutionHandler());
+        mCommandStyle = -1;
+    }
+
+    private class CustomThreadFactory implements ThreadFactory{
+        private AtomicInteger count = new AtomicInteger(0);
+        @Override
+        public Thread newThread(Runnable r){
+            Thread t = new Thread(r);
+            t.setName("Thread-"+count.getAndIncrement());
+            return t;
+        }
+    }
+
+    private class CustomRejectedExecutionHandler implements RejectedExecutionHandler{
+        @Override
+        public void rejectedExecution(Runnable r,ThreadPoolExecutor executor){
+            ToastUtils.showShortToast("任务添加过于频繁");
+        }
     }
 
     @Override
@@ -63,7 +110,6 @@ public abstract class BaseHomeFragment extends Fragment {
             rootView = inflater.inflate(getContentViewResId(), container, false);
             bind = ButterKnife.bind(this,rootView);
             initWidgets();
-            initSendCmd();
         }
         return rootView;
     }
@@ -90,11 +136,6 @@ public abstract class BaseHomeFragment extends Fragment {
 
     protected abstract void initWidgets();
 
-    private void initSendCmd(){
-        taskMap = new ConcurrentHashMap<String,FutureTask<Integer>>();
-        executorService = Executors.newCachedThreadPool();
-    }
-
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
@@ -105,77 +146,72 @@ public abstract class BaseHomeFragment extends Fragment {
     }
 
     protected void submitTask(String cmd,String data){//使用线程池提交任务
-        FutureTask<Integer> preTask = taskMap.get(cmd);
-        if(preTask!=null){
-            if(!preTask.isDone()){//之前的任务尚未完成,直接取消
-                //不添加任务,先将前面未执行的相同任务完成
-                return;
-            }
+        FutureTask<Integer> preTask = null;
+        switch(mCommandStyle){
+            case 0://蓝牙
+                preTask = mBluetoothMap.get(cmd);
+                break;
+            case 2://公网
+                preTask = mNetWorkMap.get(cmd);
+                break;
+        }
+
+        if(preTask!=null && !preTask.isDone()){//之前的任务尚未完成,直接取消,不添加任务,先将前面未执行的相同任务完成
+            return;
         }
         //前一个任务不存在,或者已经完成
-        byte[] result = BTProtocol.hexStringToByte(cmd,data);
-        SendTask task = new SendTask(activity,result);
-        FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
-        taskMap.put(cmd,futureTask);
-        executorService.submit(futureTask);
-    }
-
-    protected void sendDataByGPRS(String cmd){
-        activity.sendDataByGPRS(cmd);
-    }
-
-    public void setShowArea(String text){
-        if(text.startsWith("EB 90 00 ")){
-            int start = 0;
-            for(int i=0;i<3;i++){
-                start = start+3;
-            }
-            text = text.substring(start,start+2);
-            if(text.startsWith("8")){
-                int cmd = Integer.parseInt(text.substring(1),16);
-                FutureTask<Integer> futureTask = taskMap.get("0"+cmd);
-                if(futureTask!=null && !futureTask.isDone()){
-                    futureTask.cancel(true);
-                }
-                else{
-                    MyLog.error(null,"没进去");
-                }
-                switch(CURRENT_FRAGMENT){
-                    case 0:
-                        updateHandAreaSucess(cmd);
-                        break;
-                }
-            }
+        String str = null;
+        switch(mCommandStyle){
+            case 0:
+                str = BTProtocol.getStr(cmd,data);
+                break;
+            case 2:
+                str = cmd;
+                break;
         }
-        else if(text.startsWith("EB 90 02 ")){
-            int start = 0;
-            for(int i=0;i<3;i++){
-                start = start+3;
-            }
-            String cmd = text.substring(start,start+2);
-            String hexHigh = text.substring(start+3,start+5);
-            String hexLow = text.substring(start+6,start+8);
-            int num = Integer.parseInt(hexHigh+hexLow,16);
-            if(cmd.startsWith("8")){
-                switch (CURRENT_FRAGMENT){
-                    case 0:
-                        updateHandAreaSucessState(cmd,num);
-                        break;
-                }
-            }
+
+        SendTask task = new SendTask(this,str);
+        FutureTask<Integer> futureTask = new FutureTask<>(task);
+        switch (mCommandStyle){
+            case 0:
+                mBluetoothMap.put(cmd,futureTask);//保存任务
+               break;
+            case 2:
+                mNetWorkMap.put(cmd,futureTask);
+                break;
         }
+        mThreadPoolExector.submit(futureTask);
     }
 
-    protected void updateHandAreaSucess(int cmd){
-
+    public boolean sendData(String cmd) {
+        if (cmd != null) {
+            switch(mCommandStyle){
+                case 0:
+                    if (mIsConnected) {
+                        mBTController.sendData(StringUtils.hexStringToByte(cmd));
+                    }
+                    break;
+                case 2:
+                    sendNetworkData(cmd);
+                    break;
+            }
+            return true;
+        }
+        return false;
     }
 
-    protected void updateHandAreaSucessState(String cmd,int num){
-
+    private void sendNetworkData(String cmd){
+        Handler handler = mTcpController.mThreadHandler;
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("cmd",cmd);
+        message.setData(bundle);
+        handler.sendMessage(message);
     }
 
-    public int getCurrentFragment(){
-        return CURRENT_FRAGMENT;
+
+    public void sendDataByGPRS(String data) {
+        mPhoneControl.sendMessage("17691078058", data);
     }
 
     protected void onFragmentVisibleChange(boolean isVisible){
