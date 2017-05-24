@@ -44,6 +44,10 @@
             android:name=".ui.activity.main.FeedbackActivity"
             android:screenOrientation="portrait"
             android:theme="@style/windowTranslucentMovieTop"/>
+        <activity
+            android:name=".webview.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/windowTranslucentMovieTop" />
     </application>
 
 </manifest>
