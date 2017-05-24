@@ -1,4 +1,4 @@
-package com.safehome.injector.component.fragment;
+package com.safehome.injector.component;
 
 
 import com.safehome.injector.module.fragment.AndroidModule;
