@@ -12,7 +12,6 @@ import java.util.List;
  */
 
 public class AndroidBean implements Serializable {
-
     // 存储单独设置的值，用来显示title
     @ParamNames("type_title")
     private String type_title;
