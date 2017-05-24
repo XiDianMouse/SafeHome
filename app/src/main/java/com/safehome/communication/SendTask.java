@@ -1,9 +1,9 @@
 package com.safehome.communication;
 
 import android.os.Message;
-import android.util.Log;
 
-import com.safehome.ui.activity.main.HomeActivity;
+import com.safehome.ui.fragment.home.HomeFragment;
+import com.safehome.ui.fragment.home.child.BaseHomeFragment;
 
 import java.util.concurrent.Callable;
 
@@ -14,21 +14,21 @@ import java.util.concurrent.Callable;
 
 public class SendTask implements Callable<Integer> {
     private int maxRunTimes;//最大等待次数,每次等待10ms
-    private byte[] result;
-    private HomeActivity activity;
+    private String cmd;
+    private BaseHomeFragment mBaseFragment;
 
-    public SendTask(HomeActivity activity, byte[] result){
-        this.activity = activity;
+    public SendTask(BaseHomeFragment fragment, String str){
+        mBaseFragment = fragment;
         maxRunTimes = 50;
-        this.result = result;
+        cmd = str;
     }
 
     @Override
     public Integer call() throws Exception{
-        boolean falg = activity.sendData(result);//true:发送成功 false:发送失败
+        boolean falg = mBaseFragment.sendData(cmd);//true:发送成功 false:发送失败
         //是否能发出数据
-        if(!falg && HomeActivity.msgHandler!=null){
-            Message msg=HomeActivity.msgHandler.obtainMessage(HomeActivity.MSG_SEND_HANDCMD_FAIL);
+        if(!falg && HomeFragment.mMsgHandler!=null){
+            Message msg=HomeFragment.mMsgHandler.obtainMessage(HomeFragment.MSG_SEND_FAIL);
             msg.sendToTarget();
         }
         //是否能接收到反馈数据
@@ -58,14 +58,13 @@ public class SendTask implements Callable<Integer> {
                  *	捕获异常后再次设置中断状态,循环条件处判断中断状态
                  *
                  * */
-                Log.e(null,"进入异常");
                 break;
             }
             maxRunTimes--;
         }
         if(maxRunTimes==0){//未收到反馈数据
-            if(HomeActivity.msgHandler!=null){
-                Message msg=HomeActivity.msgHandler.obtainMessage(HomeActivity.MSG_HANDCMD_UNRESPONSE);
+            if(HomeFragment.mMsgHandler!=null){
+                Message msg=HomeFragment.mMsgHandler.obtainMessage(HomeFragment.MSG_UNRESPONSE);
                 msg.sendToTarget();
             }
         }
