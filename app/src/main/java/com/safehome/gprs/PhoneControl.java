@@ -10,8 +10,7 @@ import com.safehome.ui.activity.main.HomeActivity;
 
 import java.util.ArrayList;
 
-public class PhoneControl 
-{
+public class PhoneControl {
 	public static PhoneControl instance;
 	private HomeActivity mContext;
 	private PendingIntent mSmsSendPI;
