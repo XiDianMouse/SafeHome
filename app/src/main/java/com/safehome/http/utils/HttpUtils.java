@@ -17,6 +17,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class HttpUtils {
+
     public static <T> void invoke(LifeSubscription lifecycle, Observable<T> observable,Callback<T> callback){
         Stateful target = null;
         if(lifecycle instanceof Stateful){
