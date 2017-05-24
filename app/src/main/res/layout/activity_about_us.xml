@@ -17,18 +17,17 @@
         app:cardElevation="5.0dp"
         app:cardMaxElevation="15.dp"
         app:cardCornerRadius="10.0dp"
-        app:cardPreventCornerOverlap="true"
-        >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:padding="10dp"
-            android:text="@string/about_author"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+        app:cardPreventCornerOverlap="true">
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/about_author"
+                android:textColor="@color/colorText"
+                android:textSize="16sp">
+            </TextView>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -41,18 +40,17 @@
         app:cardElevation="5.0dp"
         app:cardMaxElevation="15.dp"
         app:cardCornerRadius="10.0dp"
-        app:cardPreventCornerOverlap="true"
-        >
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:lineSpacingMultiplier="1.2"
-            android:padding="10dp"
-            android:text="@string/about_project"
-            android:textColor="@color/colorText" />
+        app:cardPreventCornerOverlap="true">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:lineSpacingMultiplier="1.2"
+                android:padding="10dp"
+                android:text="@string/about_project"
+                android:textColor="@color/colorText">
+            </TextView>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -63,21 +61,19 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
-        android:background="@drawable/ripple_item_white_bg"
         app:cardElevation="5.0dp"
         app:cardMaxElevation="15.dp"
         app:cardCornerRadius="10.0dp"
-        app:cardPreventCornerOverlap="true"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:padding="10dp"
-            android:text="@string/about_addr"
-            android:background="@drawable/ripple_item_white_bg"
-            android:textColor="@color/colorText" />
+        app:cardPreventCornerOverlap="true">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cardview_item_bg"
+                android:gravity="start"
+                android:padding="10dp"
+                android:text="@string/about_addr"
+                android:textColor="@color/colorText">
+            </TextView>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
