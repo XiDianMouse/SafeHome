@@ -6,5 +6,6 @@ package com.safehome.listeners;
  */
 
 public interface OnItemClickListener<T>{
+
     void onClick(T item);
 }
