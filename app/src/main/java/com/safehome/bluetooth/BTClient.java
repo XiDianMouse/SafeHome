@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.CountDownTimer;
 
+import com.safehome.listeners.OnReceiverListener;
 import com.safehome.utils.MyLog;
 
 import java.io.IOException;
@@ -23,18 +24,22 @@ public class BTClient {
 	private boolean isReceivable;
 	private InputStream inStream;
 	private OutputStream outStream;
-	private BTEventListener btListener;
+	private BTClientStateListener stateListener;
+	private OnReceiverListener<String> onReceiverListener;
 	
-	public interface BTEventListener{
+	public interface BTClientStateListener{
 		void onConnectFinished(boolean state);
-		void onReceiveData(String address, byte[] data);
 	}
 	public BTClient(BluetoothDevice device){
 		btDevice=device;
 	}
 	
-	public void setEventListener(BTEventListener listener){
-		btListener=listener;
+	public void setBTClientStateListener(BTClientStateListener listener){
+		stateListener=listener;
+	}
+
+	public void setOnReceiverListener(OnReceiverListener listener){
+		onReceiverListener = listener;
 	}
 	
 	public BluetoothDevice getDevice() {
@@ -162,8 +167,8 @@ public class BTClient {
 			// TODO Auto-generated method stub
 			if(isCountDownTimerEnabled && isConnected){
 				isCountDownTimerEnabled=false;
-				if(btListener!=null)
-					btListener.onConnectFinished(true);
+				if(stateListener!=null)
+					stateListener.onConnectFinished(true);
 			}
 		}
 		
@@ -171,8 +176,8 @@ public class BTClient {
 		public void onFinish() {
 			if(isCountDownTimerEnabled){
 				isCountDownTimerEnabled=false;
-				if(btListener!=null)
-					btListener.onConnectFinished(isConnected);
+				if(stateListener!=null)
+					stateListener.onConnectFinished(isConnected);
 			}
 		}
 	};
@@ -190,12 +195,12 @@ public class BTClient {
 		public void onFinish() {
 			synchronized (BTClient.this) {
 				isTimerEnabled=false;
-				if(btListener!=null){
+				if(onReceiverListener!=null){
 					byte[] arr=new byte[buffer.size()];
 					for(int i=0;i<arr.length;i++){
 						arr[i]=buffer.get(i);
 					}
-					btListener.onReceiveData(btDevice.getAddress(),arr);
+					onReceiverListener.onReceive(com.safehome.utils.StringUtils.toHex(arr),btDevice.getAddress());
 				}
 				buffer.clear();
 			}
