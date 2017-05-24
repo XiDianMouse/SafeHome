@@ -10,7 +10,6 @@ import java.util.List;
  */
 
 public class GankIoDataBean implements Serializable {
-
     private boolean error;
     /**
      * _id : 5832662b421aa929b0f34e99
