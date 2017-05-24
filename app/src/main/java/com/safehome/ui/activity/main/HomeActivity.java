@@ -2,8 +2,6 @@ package com.safehome.ui.activity.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -20,20 +18,16 @@ import android.widget.RadioGroup;
 
 import com.blankj.utilcode.utils.SPUtils;
 import com.blankj.utilcode.utils.ToastUtils;
+import com.safehome.ItemEntry.MenuEntry;
 import com.safehome.R;
 import com.safehome.adapter.HomeFragmentPageAdapter;
 import com.safehome.adapter.MenuAdapter;
-import com.safehome.bean.menu.MenuItem;
-import com.safehome.bluetooth.BTController;
-import com.safehome.gprs.PhoneControl;
 import com.safehome.listeners.OnItemClickListener;
-import com.safehome.protocol.BTProtocol;
 import com.safehome.ui.activity.base.BaseActivity;
+import com.safehome.ui.fragment.Life.WeChatFragment;
 import com.safehome.ui.fragment.gank.AndroidFragment;
 import com.safehome.ui.fragment.home.HomeFragment;
-import com.safehome.ui.fragment.home.child.PageConnectFragment;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,18 +41,8 @@ import butterknife.OnClick;
  * Created on 2017/5/5.
  */
 
-public class HomeActivity extends BaseActivity implements OnItemClickListener<MenuItem>{
-    public static final int MSG_UPDATE_BT_STATE = 0x00;
-    public static final int MSG_RECEIVE_DATA = 0x01;
-    public static final int MSG_SEND_HANDCMD_FAIL = 0x02;
-    public static final int MSG_HANDCMD_UNRESPONSE = 0x03;
-    public static int commandStyle;//0:蓝牙　1:GPRS
-    private boolean isBTConnected;
-    public BTController btController;
-    public static MsgHandler msgHandler;
-    private WheelchairListener mListener;
-    private PhoneControl mPhoneControl;
-    private PageConnectFragment mPageConnectFragment;
+public class HomeActivity extends BaseActivity implements OnItemClickListener<MenuEntry>{
+    private HomeFragment mHomeFragment;
 
 
     @BindView(R.id.fl_title_menu)
@@ -79,7 +63,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
     @BindView(R.id.menu_recyclerview)
     RecyclerView menuRecyclerview;
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_home;
@@ -93,11 +76,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setDisplayHomeAsUpEnabled(false);//不显示返回键
         supportActionBar.setDisplayShowTitleEnabled(false);//去除默认标题
-        btController = BTController.getInstance(this);
-        isBTConnected = false;
-        commandStyle = -1;
-        msgHandler = new MsgHandler(this);
-        mPhoneControl = PhoneControl.getInstance(this);
+        mHomeFragment = new HomeFragment();
         initFragmentView();
         initMenuView();
         SPUtils spUtils = new SPUtils("home_list");
@@ -126,10 +105,9 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
         });
 
         List<Fragment> mFragmentList = new ArrayList<>();
-        mPageConnectFragment = new PageConnectFragment();
-        mFragmentList.add(new HomeFragment());
+        mFragmentList.add(mHomeFragment);
         mFragmentList.add(new AndroidFragment());
-        mFragmentList.add(mPageConnectFragment);
+        mFragmentList.add(new WeChatFragment());
         vpContent.setAdapter(new HomeFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));
         vpContent.setCurrentItem(0);
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -162,19 +140,19 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
 
     private void initMenuView() {
         menuRecyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        MenuAdapter menuAdapter = new MenuAdapter();
+        MenuAdapter menuAdapter = new MenuAdapter(this);
         menuAdapter.addItems(prepareMenuItems());
         menuAdapter.setItemClickListener(this);
         menuRecyclerview.setAdapter(menuAdapter);
     }
 
-    private List<MenuItem> prepareMenuItems() {
-        List<MenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MenuItem(R.drawable.theme_color,"个性换肤"));
-        menuItems.add(new MenuItem(R.drawable.about_us,"关于我们"));
-        menuItems.add(new MenuItem(R.drawable.setting,"设置"));
-        menuItems.add(new MenuItem(R.drawable.feedback,"意见反馈"));
-        menuItems.add(new MenuItem(R.drawable.exit_app,"退出"));
+    private List<MenuEntry> prepareMenuItems() {
+        List<MenuEntry> menuItems = new ArrayList<>();
+        menuItems.add(new MenuEntry(R.drawable.theme_color,"个性换肤"));
+        menuItems.add(new MenuEntry(R.drawable.about_us,"关于我们"));
+        menuItems.add(new MenuEntry(R.drawable.setting,"设置"));
+        menuItems.add(new MenuEntry(R.drawable.feedback,"意见反馈"));
+        menuItems.add(new MenuEntry(R.drawable.exit_app,"退出"));
         return menuItems;
     }
 
@@ -225,7 +203,7 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
     }
 
     @Override
-    public void onClick(MenuItem item){
+    public void onClick(MenuEntry item){
         switch(item.iconResId){
             case R.drawable.theme_color:
                 ToastUtils.showShortToast("尚未开发");
@@ -242,82 +220,6 @@ public class HomeActivity extends BaseActivity implements OnItemClickListener<Me
             case R.drawable.exit_app:
                 killAll();
                 break;
-        }
-    }
-
-    public interface WheelchairListener {
-        void onReceiveData(byte[] data);
-    }
-
-
-    public void updateBTState(boolean isConnected) {
-        if (isConnected) {
-            ToastUtils.showShortToast("已连接");
-            isBTConnected = true;
-        } else {
-            ToastUtils.showShortToast("已断开");
-            isBTConnected = false;
-        }
-    }
-
-    public boolean sendData(byte[] data) {
-        if (data != null) {
-            if (isBTConnected) {
-                btController.sendData(data);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void sendDataByGPRS(String data) {
-        mPhoneControl.sendMessage("17691078058", data);
-    }
-
-    public void onReceiveData(String address, byte[] data) {
-        String receivedData = BTProtocol.toHex(data);
-        //mPageHandFragment.setShowArea(receivedData);
-        if (mListener != null) {
-            mListener.onReceiveData(data);
-        }
-    }
-
-    public void updateHandCmdStatus(String msg) {
-        //mPageHandFragment.updateCmdStatus(msg);
-    }
-
-    //创建静态内部类，防止内存泄漏
-    public static class MsgHandler extends Handler {
-        private WeakReference<HomeActivity> mRef;
-
-        public MsgHandler(HomeActivity activity) {
-            this.mRef = new WeakReference<>(activity);
-        }
-
-        public void handleMessage(Message msg) {//此方法在ui线程运行
-            HomeActivity activity = this.mRef.get();
-            if (activity == null) {
-                return;
-            }
-            switch (msg.what) {
-                case MSG_UPDATE_BT_STATE:
-                    activity.updateBTState(msg.arg1 != 0);
-                    break;
-                case MSG_RECEIVE_DATA:
-                    Object[] data = (Object[]) msg.obj;
-                    activity.onReceiveData((String) data[0], (byte[]) data[1]);
-                    break;
-                case MSG_SEND_HANDCMD_FAIL:
-                    ToastUtils.showShortToast("数据发送失败,请确认是否连接设备!");
-                    break;
-                case MSG_HANDCMD_UNRESPONSE:
-//                    switch (activity.mPageHandFragment.getCurrentFragment()) {
-//                        case 0:
-//                            ToastUtils.showShortToast("未收到设备反馈,请检测并重新发送");
-//                            break;
-//                    }
-                    break;
-            }
         }
     }
 }
