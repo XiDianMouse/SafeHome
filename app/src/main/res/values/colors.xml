@@ -6,8 +6,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="btn_press_color">#d1d1d1</color>
-    <color name="popmenu_item_pressed">#e1e1e1</color>
-    <color name="popmenu_item_normal">#d1d1d1</color>
+    <color name="dialog_item_pressed">#e1e1e1</color>
 
     <color name="txtRed">#dc5130</color>
     <color name="colorBlue">#00a2e0</color>
