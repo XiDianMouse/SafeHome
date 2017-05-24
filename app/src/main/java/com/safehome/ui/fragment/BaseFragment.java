@@ -1,5 +1,6 @@
 package com.safehome.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.safehome.http.LifeSubscription;
 import com.safehome.http.Stateful;
 import com.safehome.presenter.BasePresenter;
+import com.safehome.ui.activity.main.HomeActivity;
 import com.safehome.view.LoadingPage;
 
 import javax.inject.Inject;
@@ -37,6 +39,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     @Inject
     protected RecyclerView.Adapter mAdapter;
 
+    protected HomeActivity activity;
+
     public LoadingPage mLoadingPage;
 
     private boolean mIsVisible = false;//fragment是否显示了
@@ -45,6 +49,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
     protected View contentView;
     private Unbinder bind;
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        this.activity = (HomeActivity)activity;
+    }
 
     @Nullable
     @Override
