@@ -6,7 +6,6 @@ import android.widget.Button;
 
 import com.blankj.utilcode.utils.ToastUtils;
 import com.safehome.R;
-import com.safehome.ui.activity.main.HomeActivity;
 
 /**
  * @auther gbh
@@ -15,10 +14,9 @@ import com.safehome.ui.activity.main.HomeActivity;
 
 public class PageFaceFragment extends BaseHomeFragment implements OnClickListener{
 	private Button openOrcloseBtn;
-	private boolean openFlag;
 	
 	public PageFaceFragment(){
-		openFlag = false;
+
 	}
 
 	@Override
@@ -40,14 +38,13 @@ public class PageFaceFragment extends BaseHomeFragment implements OnClickListene
 	protected void onFragmentVisibleChange(boolean isVisible){
 		super.onFragmentVisibleChange(isVisible);
 		if (isVisible){
-			CURRENT_FRAGMENT = 1;
-	    } 
+	    }
 		else{
 	    }
 	}
 	@Override
 	public void onClick(View v) {
-		switch(HomeActivity.commandStyle){
+		switch(mCommandStyle){
 			case 0:
 				sendCmdByBluetooth(v);
 				break;
@@ -76,12 +73,7 @@ public class PageFaceFragment extends BaseHomeFragment implements OnClickListene
 				cmd = "A0";
 				break;
 			case R.id.face_deleteall:
-				//if(!openFlag){//尚未开启
-					cmd = "A1";
-				//}
-				//else{
-				//	cmd = "06";
-				//}
+				cmd = "A1";
 				break;
 		}
 		submitTask(cmd,data);
@@ -102,18 +94,9 @@ public class PageFaceFragment extends BaseHomeFragment implements OnClickListene
 			case R.id.face_deleteall:
 				cmd = "DeleteXFAll";
 				break;
-//			case R.id.fa:
-//				if(!openFlag){//尚未开启
-//					openFlag = true;
-//					cmd = "OpenFinger";
-//					//openOrcloseBtn.setBackgroundDrawable(closeStateListDrawable);
-//				}
-//				else{
-//					openFlag = false;
-//					cmd = "CloseFinger";
-//					//openOrcloseBtn.setBackgroundDrawable(openStateListDrawable);
-//				}
-//				break;
+			case R.id.face_identification:
+				cmd = "";
+				break;
 		}
 		sendDataByGPRS(cmd);
 	}
