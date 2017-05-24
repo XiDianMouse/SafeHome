@@ -4,18 +4,6 @@
     android:orientation="vertical"
 	android:padding="3dp"
     android:scrollbars="vertical" >
-    	
-    <TextView
-    	android:id="@+id/areaName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="always"
-        android:scrollbars="vertical"
-        android:textSize="18sp"
-        android:text="@string/face_operation"
-        android:textColor="@color/txtRed"
-        android:textStyle="bold"
-        />
 
     <RelativeLayout
         android:id="@+id/operationArea"
