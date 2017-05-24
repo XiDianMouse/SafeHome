@@ -25,7 +25,6 @@ public class BaseHttpModule {
      * @return
      */
 
-
     /*
     * @Provides:在modules中定义的方法是用这个注解,以此来告诉Dagger我们想要构造对象并提供这些依赖
     * @Singleton:当前提供的对象将是单例模式,一般配合Provides出现
