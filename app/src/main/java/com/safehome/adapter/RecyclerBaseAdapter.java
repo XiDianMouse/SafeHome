@@ -1,5 +1,6 @@
 package com.safehome.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,11 @@ import java.util.List;
 public abstract class RecyclerBaseAdapter<D,V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V>{
     protected final List<D> mDataList = new ArrayList<>();//RecyclerView中的数据集
     private OnItemClickListener<D> mItemClickListener;//点击事件回调处理
+    protected Context mContext;
+
+    public RecyclerBaseAdapter(Context context){
+        mContext = context;
+    }
 
     public void setItemClickListener(OnItemClickListener<D> itemClickListener){
         mItemClickListener = itemClickListener;
@@ -56,6 +62,19 @@ public abstract class RecyclerBaseAdapter<D,V extends RecyclerView.ViewHolder> e
         items.removeAll(mDataList);//移除已经存在的数据
         mDataList.addAll(items);//添加新数据
         notifyDataSetChanged();
+    }
+
+    public void addItem(D item){
+        mDataList.add(item);
+        notifyDataSetChanged();
+    }
+
+    public List<D> getDataList(){
+        return mDataList;
+    }
+
+    public void update(){
+        this.notifyDataSetChanged();
     }
 
     public void clear(){
