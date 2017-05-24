@@ -14,6 +14,7 @@ import rx.Subscriber;
  */
 
 public class Callback<T> extends Subscriber<T>{
+
     private Stateful target;
 
     public void setTarget(Stateful target){
