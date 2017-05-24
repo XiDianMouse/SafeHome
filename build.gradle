@@ -12,6 +12,17 @@ buildscript {
     }
 }
 
+/*
+*gradle导入jar包的特点：（和libs文件夹导入jar包的区别）
+
+gradle导入jar包更方便，一行代码即可搞定。不像后者那样还要自己去官方下载。
+如果官方将jar包更新了，我们只需要在build.gradle中改一下版本号就行了，不用重新去官网下载。
+* */
+
+/*
+*"jcenter()"的意思是，所有通过gradle导入的jar包都是从http://bintray.com/bintray/jcenter
+* 这个中央仓库上扒下来的。如果你需要的jar包在这个网站上没有，那就无法通过gradle的方式来导入
+* */
 allprojects {
     repositories {
         jcenter()
