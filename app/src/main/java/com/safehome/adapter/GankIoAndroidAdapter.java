@@ -1,5 +1,6 @@
 package com.safehome.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,10 @@ import butterknife.ButterKnife;
  */
 
 public class GankIoAndroidAdapter extends RecyclerBaseAdapter<GankIoDataBean.ResultBean,MyAndroidViewHolder>{
+
+    public GankIoAndroidAdapter(Context context){
+        super(context);
+    }
 
     static class MyAndroidViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.tv_android_des)
