@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.safehome.ui.fragment.home.HomeFragment;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +18,7 @@ import java.util.Set;
 
 public class BTController {
 	private Context mContext;
+	private HomeFragment mHomeFragemnt;
 	private BluetoothAdapter btAdapter;
 	private Set<BluetoothDevice> foundedDevices;
 	private List<BTClient> connectedClients;
@@ -29,17 +32,22 @@ public class BTController {
 		void onDiscoveryFinished(Set<BluetoothDevice> devices);
 	}
 
-	private BTController(Context context){
+	private BTController(Context context,HomeFragment homeFragment){
 		mContext=context;
-		foundedDevices=new HashSet<BluetoothDevice>();
-		clients=new HashMap<String, BTClient>();
-		connectedClients=new ArrayList<BTClient>();
+		mHomeFragemnt = homeFragment;
+		foundedDevices=new HashSet<>();
+		clients=new HashMap<>();
+		connectedClients=new ArrayList<>();
 	}
 
-	public static BTController getInstance(Context context){
+	public static BTController getInstance(Context context,HomeFragment homeFragment){
 		if(instance==null){
-			instance=new BTController(context);
+			instance=new BTController(context,homeFragment);
 		}
+		return instance;
+	}
+
+	public static BTController getInstance(){
 		return instance;
 	}
 
@@ -130,6 +138,7 @@ public class BTController {
 		if(!clients.containsKey(client.getDevice().getAddress()))
 			clients.put(client.getDevice().getAddress(),client);
 		int ret=client.connect();
+		client.setOnReceiverListener(mHomeFragemnt);//使得Fragment可以得到蓝牙返回的数据
 		if(ret==1){
 			return 1;
 		}else if(ret==2){
