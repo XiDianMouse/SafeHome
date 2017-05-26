@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHolder> {
 	//我觉得这样做比较好 ---------------------- 2017.5.26
+	//我现在觉得这样做可能会更好呢
     public DialogAdapter(Context context) {
         super(context);
     }
