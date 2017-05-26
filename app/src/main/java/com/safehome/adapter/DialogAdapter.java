@@ -25,6 +25,7 @@ public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHo
 	//我觉得这样改是不是更合理呢。。。。。。。
 
 	//我自己来一次优化吧，哈哈哈
+	//这一次应该就会冲突了吧
     public DialogAdapter(Context context) {
         super(context);
     }
