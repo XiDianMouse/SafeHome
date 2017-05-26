@@ -48,6 +48,8 @@ public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHo
         viewHolder.itemProgress.setVisibility(isVisible);
     }
 
+	//又要突发奇想了呢
+
     @Override
     public DialogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = inflateItemView(parent, R.layout.item_dialog);
