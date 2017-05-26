@@ -26,6 +26,7 @@ public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHo
 
 	//我自己来一次优化吧，哈哈哈
 	//自己再来一次
+
     public DialogAdapter(Context context) {
         super(context);
     }
