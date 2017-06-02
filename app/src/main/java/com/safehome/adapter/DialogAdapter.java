@@ -21,6 +21,8 @@ import butterknife.ButterKnife;
 
 public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHolder> {
 
+	//2017-6-2
+
     public DialogAdapter(Context context) {
         super(context);
     }
