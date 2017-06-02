@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHolder> {
-    //≤‚ ‘¡¨Ω”
+    //utf-8
     public DialogAdapter(Context context) {
         super(context);
     }
