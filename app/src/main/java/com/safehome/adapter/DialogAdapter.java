@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHolder> {
-
+    //≤‚ ‘¡¨Ω”
     public DialogAdapter(Context context) {
         super(context);
     }
@@ -43,7 +43,7 @@ public class DialogAdapter extends RecyclerBaseAdapter<BTItemEntry, DialogViewHo
         }
         viewHolder.itemProgress.setVisibility(isVisible);
     }
-    
+
     @Override
     public DialogViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = inflateItemView(parent, R.layout.item_dialog);
