@@ -23,8 +23,6 @@ import butterknife.ButterKnife;
  */
 
 public class GankIoAndroidAdapter extends RecyclerBaseAdapter<GankIoDataBean.ResultBean,MyAndroidViewHolder>{
-	
-	//我的另一个思路,建议你进行采纳-------------------------2017.5.26
 
     public GankIoAndroidAdapter(Context context){
         super(context);

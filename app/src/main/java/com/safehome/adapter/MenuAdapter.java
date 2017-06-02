@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 
 public class MenuAdapter extends RecyclerBaseAdapter<MenuEntry, MenuViewHolder> {
 
-	//对性能做了进一步的优化
-
     public MenuAdapter(Context context){
         super(context);
     }
