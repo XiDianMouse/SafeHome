@@ -2,8 +2,8 @@
 <br>该项目用到了Material Desin和一些主流框架
 
 ## Screenshots
-![](imagefile/UI.png)
-![](imagefile/function.png)
+![picture](imagefile/UI.png)
+![picture](imagefile/function.png)
 
 ## Features 特性
 * 遵循Material Desin设计风格

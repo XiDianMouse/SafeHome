@@ -4,11 +4,6 @@
 * */
 
 
-
-
-
-
-
 //声明是Android程序
 apply plugin: 'com.android.application'//打包得到的是.apk文件
 
