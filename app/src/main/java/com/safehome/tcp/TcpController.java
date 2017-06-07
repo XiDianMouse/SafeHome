@@ -16,8 +16,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * @auther gbh
- * Created on 2017/5/21.
  */
 
 public class TcpController implements Runnable{

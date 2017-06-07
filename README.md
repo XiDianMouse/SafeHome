@@ -2,8 +2,8 @@
 <br>该项目用到了Material Desin和一些主流框架
 
 ## Screenshots
-![picture](imagefile/UI.png)
-![picture](imagefile/function.png)
+![picture](https://github.com/XiDianMouse/SafeHome/blob/master/imagefile/UI.png)
+![picture](https://github.com/XiDianMouse/SafeHome/blob/master/imagefile/function.png)
 
 ## Features 特性
 * 遵循Material Desin设计风格

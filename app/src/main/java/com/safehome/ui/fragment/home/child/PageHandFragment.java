@@ -160,7 +160,8 @@ public class PageHandFragment extends BaseHomeFragment {
         String cmd = null;
         switch (view.getId()) {
             case R.id.ll_hand_delete:
-                cmd = "DeleteOne";
+                //cmd = "DeleteOne";
+                cmd = "15702923681+108.925329,34.238966";
                 break;
             case R.id.ll_hand_deleteall:
                 cmd = "DeleteAll";
